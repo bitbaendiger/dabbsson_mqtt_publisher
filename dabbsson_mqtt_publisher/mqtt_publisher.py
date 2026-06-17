@@ -111,15 +111,7 @@ def publish_discovery(dps_key):
             payload["command_topic"] = cmd_topic
 
     # Zusatzinformationen für Home Assistant
-    if dtype == "int" and not writable:
-        if dps_key == "10":
-            payload.update({"unit_of_measurement": "°C", "device_class": "temperature"})
-        elif dps_key in ["1", "123", "138"]:
-            payload.update({"unit_of_measurement": "%", "device_class": "battery"})
-        elif dps_key in ["105", "108"]:
-            payload.update({"unit_of_measurement": "W", "device_class": "power"})
-        elif dps_key == "145":
-            payload.update({"unit_of_measurement": "V", "device_class": "voltage"})
+    payload.update(meta.get("payload", {}))
 
     discovery_topic = f"{MQTT_DISCOVERY_PREFIX}/{component}/dabbsson/{base_id}/config"
     print(f"🛰️ Discovery: {discovery_topic}")

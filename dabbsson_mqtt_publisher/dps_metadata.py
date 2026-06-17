@@ -1,12 +1,15 @@
+batteryPercentage = {"unit_of_measurement": "%", "device_class": "battery"}
+powerWatts        = {"unit_of_measurement": "W", "device_class": "power"}
+
 DPS_METADATA = {
     # === Allgemein / Batterie ===
-    "1":   {"name": "Batterie SoC",                   "type": "int",  "writable": False},
+    "1":   {"name": "Batterie SoC",                   "type": "int",  "writable": False, "payload": batteryPercentage},
     "2":   {"name": "Verbleibende Zeit",              "type": "int",  "writable": False},
-    "10":  {"name": "Temperatur",                     "type": "int",  "writable": False},
+    "10":  {"name": "Temperatur",                     "type": "int",  "writable": False, "payload": {"unit_of_measurement": "°C", "device_class": "temperature"}},
     "101": {"name": "Batterie lädt",                  "type": "bool", "writable": False},
     "125": {"name": "Erweiterungsbatterie verbunden", "type": "bool", "writable": False},
-    "138": {"name": "Erweiterungsbatterie 1",         "type": "int",  "writable": True},
-    "139": {"name": "Erweiterungsbatterie 2",         "type": "int",  "writable": True},
+    "138": {"name": "Erweiterungsbatterie 1",         "type": "int",  "writable": False, "payload": batteryPercentage},
+    "139": {"name": "Erweiterungsbatterie 2",         "type": "int",  "writable": False, "payload": batteryPercentage},
 
     # === AC/USB/DC Steuerung ===
     "25":  {"name": "Beep (Tonsignal)",               "type": "bool", "writable": True},
@@ -21,23 +24,23 @@ DPS_METADATA = {
     "128": {"name": "Smart Charging EIN/AUS",         "type": "bool", "writable": True},
 
     # === Leistungsmessung ===
-    "103": {"name": "PV Eingang",                     "type": "int",  "writable": False},
-    "104": {"name": "AC Eingang",                     "type": "int",  "writable": False},
-    "105": {"name": "Batterie1 Out",                  "type": "int",  "writable": False},
-    "106": {"name": "Batterie2 Out",                  "type": "int",  "writable": False},
-    "107": {"name": "Ausgang Gesamt",                 "type": "int",  "writable": False},
-    "108": {"name": "AC Ausgang Leistung",            "type": "int",  "writable": False},
-    "110": {"name": "12V Ausgang",                    "type": "int",  "writable": False},
-    "113": {"name": "USBA1 Leistung",                 "type": "int",  "writable": False},
-    "114": {"name": "USBA2 Leistung",                 "type": "int",  "writable": False},
-    "115": {"name": "USBA3 Leistung",                 "type": "int",  "writable": False},
-    "116": {"name": "USBC1 Leistung",                 "type": "int",  "writable": False},
-    "117": {"name": "USBC2 Leistung",                 "type": "int",  "writable": False},
-    "118": {"name": "USBC3 Leistung",                 "type": "int",  "writable": False},
-    "131": {"name": "Eingang Gesamtleistung",         "type": "int",  "writable": False},
+    "103": {"name": "PV Eingang",                     "type": "int",  "writable": False, "payload": powerWatts},
+    "104": {"name": "AC Eingang",                     "type": "int",  "writable": False, "payload": powerWatts},
+    "105": {"name": "Batterie1 Out",                  "type": "int",  "writable": False, "payload": powerWatts},
+    "106": {"name": "Batterie2 Out",                  "type": "int",  "writable": False, "payload": powerWatts},
+    "107": {"name": "Ausgang Gesamt",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "108": {"name": "AC Ausgang Leistung",            "type": "int",  "writable": False, "payload": powerWatts},
+    "110": {"name": "12V Ausgang",                    "type": "int",  "writable": False, "payload": powerWatts},
+    "113": {"name": "USBA1 Leistung",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "114": {"name": "USBA2 Leistung",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "115": {"name": "USBA3 Leistung",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "116": {"name": "USBC1 Leistung",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "117": {"name": "USBC2 Leistung",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "118": {"name": "USBC3 Leistung",                 "type": "int",  "writable": False, "payload": powerWatts},
+    "131": {"name": "Eingang Gesamtleistung",         "type": "int",  "writable": False, "payload": powerWatts},
 
     # === Lademodi & Leistung ===
-    "123": {"name": "AC Ziel-Ladeleistung",           "type": "int",  "writable": True},
+    "123": {"name": "AC Ziel-Ladeleistung",           "type": "int",  "writable": True,  "payload": powerWatts},
     "124": {"name": "Fast/Slow Charge Hinweis",       "type": "bool", "writable": False},
 
     # === Zeitsteuerung ===
@@ -56,7 +59,7 @@ DPS_METADATA = {
     "129": {"name": "Gerät ausschalten",              "type": "bool", "writable": True},
     "142": {"name": "Werksreset",                     "type": "bool", "writable": True},
     "144": {"name": "App-Heartbeat",                  "type": "bool", "writable": True},
-    "145": {"name": "Netzspannung einstellen",        "type": "int",  "writable": True},
+    "145": {"name": "Netzspannung einstellen",        "type": "int",  "writable": True,  "payload": {"unit_of_measurement": "V", "device_class": "voltage"}},
 
     # === Fehlerstatus ===
     "134": {"name": "Inverter Fehler",                "type": "int",  "writable": False},
