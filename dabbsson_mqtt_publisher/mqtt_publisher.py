@@ -112,8 +112,22 @@ def publish_discovery(dps_key):
                 "step": 1
             })
         elif dtype == "str":
-            component = "text"
             payload["command_topic"] = cmd_topic
+            options = meta.get("options", [])
+
+            if options:
+                component = "select"
+                payload.update({
+                    "options": options
+                })
+            else:
+                component = "text"
+    elif dtype == "bool":
+        component = "binary_sensor"
+        payload.update({
+            "payload_on": "true",
+            "payload_off": "false"
+        })
 
     # Zusatzinformationen für Home Assistant
     payload.update(meta.get("payload", {}))
