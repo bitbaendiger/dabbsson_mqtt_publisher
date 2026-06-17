@@ -4,10 +4,10 @@ powerWatts        = {"unit_of_measurement": "W", "device_class": "power"}
 DPS_METADATA = {
     # === Allgemein / Batterie ===
     "1":   {"name": "Batterie SoC",                   "type": "int",  "writable": False, "payload": batteryPercentage},
-    "2":   {"name": "Verbleibende Zeit",              "type": "int",  "writable": False},
+    "2":   {"name": "Verbleibende Zeit",              "type": "int",  "writable": False, "payload": {"unit_of_measurement": "min", "device_class": "duration"}},
     "10":  {"name": "Temperatur",                     "type": "int",  "writable": False, "payload": {"unit_of_measurement": "°C", "device_class": "temperature"}},
-    "101": {"name": "Batterie lädt",                  "type": "bool", "writable": False},
-    "125": {"name": "Erweiterungsbatterie verbunden", "type": "bool", "writable": False},
+    "101": {"name": "Batterie lädt",                  "type": "bool", "writable": False, "payload": {"device_class": "battery_charging"}},
+    "125": {"name": "Erweiterungsbatterie verbunden", "type": "bool", "writable": False, "payload": {"device_class": "plug"}},
     "138": {"name": "Erweiterungsbatterie 1",         "type": "int",  "writable": False, "payload": batteryPercentage},
     "139": {"name": "Erweiterungsbatterie 2",         "type": "int",  "writable": False, "payload": batteryPercentage},
 
@@ -19,8 +19,8 @@ DPS_METADATA = {
     "126": {"name": "P-BOOST",                        "type": "bool", "writable": True},
 
     # === Anzeige- & LED-Zustände ===
-    "102": {"name": "LED-Status",                     "type": "str",  "writable": True},
-    "127": {"name": "Systemmodus",                    "type": "str",  "writable": False},
+    "102": {"name": "LED-Status",                     "type": "str",  "writable": True,  "options": ["off", "dim", "bright", "sos"]},
+    "127": {"name": "Systemmodus",                    "type": "str",  "writable": False, "payload": {"device_class": "enum", "options": ["standby_mode", "eco_mode"]}},
     "128": {"name": "Smart Charging EIN/AUS",         "type": "bool", "writable": True},
 
     # === Leistungsmessung ===
@@ -44,9 +44,9 @@ DPS_METADATA = {
     "124": {"name": "Fast/Slow Charge Hinweis",       "type": "bool", "writable": False},
 
     # === Zeitsteuerung ===
-    "120": {"name": "AC Einschaltzeit",               "type": "str",  "writable": True},
-    "121": {"name": "LCD Aus-Zeit",                   "type": "str",  "writable": True},
-    "122": {"name": "AC Auto-Ausschaltzeit",          "type": "str",  "writable": True},
+    "120": {"name": "AC Einschaltzeit",               "type": "str",  "writable": True, "options": ["30_minutes", "1_hour", "2_hours", "6_hours", "12_hours", "close_timing"]},
+    "121": {"name": "LCD Aus-Zeit",                   "type": "str",  "writable": True, "options": ["10_seconds", "30_seconds", "1_minute", "5_minutes", "30_minutes", "close_timing"]},
+    "122": {"name": "AC Auto-Ausschaltzeit",          "type": "str",  "writable": True, "options": ["2_hours", "4_hours", "6_hours", "12_hours", "24_hours", "close_timing"]},
 
     # === Geräteinformationen ===
     "130": {"name": "PD Firmware",                    "type": "str",  "writable": False},
