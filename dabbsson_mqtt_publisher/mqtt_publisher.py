@@ -49,7 +49,12 @@ def on_message(client, userdata, msg):
         if not meta.get("writable"):
             print(f"⛔️ DPS {dps_key} ist nicht beschreibbar")
             return
-        value = json.loads(msg.payload.decode())
+        value = msg.payload.decode()
+        type = meta.get("type")
+        if type == "int":
+            value = int(value)
+        elif type == "bool":
+            value = True if value == "true" else False
         print(f"➡️ Befehl für DPS {dps_key}: {value}")
         device.set_value(dps_key, value)
     except Exception as e:
