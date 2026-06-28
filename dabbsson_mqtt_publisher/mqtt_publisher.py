@@ -148,6 +148,11 @@ def publish_loop():
                     print(f"📤 DPS {key}: {val_str}")
                     client.publish(topic, val_str, retain=True)
                     publish_discovery(key)
+                else:
+                    print(f"⛔️ DPS {key} ist nicht bekannt. Wert: {value}")
+
+            if not dps:
+                print(f"⛔️ Keine Daten gelesen")
         except Exception as e:
             print(f"⚠️ Fehler bei Statusabruf: {e}")
         time.sleep(5)
