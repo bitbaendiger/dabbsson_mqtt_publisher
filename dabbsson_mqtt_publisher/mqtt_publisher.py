@@ -63,6 +63,8 @@ def on_message(client, userdata, msg):
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(MQTT_HOST, MQTT_PORT, 60)
+client.publish(f'{MQTT_TOPIC}/status', 'online', 0, True)
+client.will_set(f'{MQTT_TOPIC}/status', 'offline', 0, True)
 
 # Discovery-Payload veröffentlichen
 discovered = set()
@@ -91,6 +93,9 @@ def publish_discovery(dps_key):
         "name": name,
         "unique_id": base_id,
         "state_topic": state_topic,
+        "availability_topic": f"{MQTT_TOPIC}/status",
+        "payload_available": "online",
+        "payload_not_available": "offline",
         "device": device_config
     }
 
@@ -153,6 +158,10 @@ def publish_loop():
 
             if not dps:
                 print(f"⛔️ Keine Daten gelesen")
+                client.will_set(f'{MQTT_TOPIC}/status', 'offline', retain=True)
+            else:
+                client.publish(f'{MQTT_TOPIC}/status', 'online', retain=True)
+
         except Exception as e:
             print(f"⚠️ Fehler bei Statusabruf: {e}")
         time.sleep(5)
