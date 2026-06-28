@@ -45,7 +45,7 @@ def on_connect(client, userdata, flags, rc, properties):
 def on_message(client, userdata, msg):
     try:
         dps_key = msg.topic.split("/")[-1]
-        meta = DPS_METADATA.get(dps_key, {})
+        meta = DPS_METADATA["DBS2300"].get(dps_key, {})
         if not meta.get("writable"):
             print(f"⛔️ DPS {dps_key} ist nicht beschreibbar")
             return
@@ -73,7 +73,7 @@ def publish_discovery(dps_key):
         return
     discovered.add(dps_key)
 
-    meta = DPS_METADATA.get(dps_key, {})
+    meta = DPS_METADATA["DBS2300"].get(dps_key, {})
     name = meta.get("name", f"DPS {dps_key}")
     writable = meta.get("writable", False)
     dtype = meta.get("type", "str")
@@ -147,7 +147,7 @@ def publish_loop():
         try:
             dps = device.status().get("dps", {})
             for key, value in dps.items():
-                if key in DPS_METADATA:
+                if key in DPS_METADATA["DBS2300"]:
                     val_str = "true" if value is True else "false" if value is False else str(value)
                     topic = f"{MQTT_TOPIC}/{key}"
                     print(f"📤 DPS {key}: {val_str}")
