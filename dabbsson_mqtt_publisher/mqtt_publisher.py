@@ -32,12 +32,12 @@ except Exception as e:
     exit(1)
 
 # MQTT-Client vorbereiten
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 if MQTT_USER:
     client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
 
 # Verbindungsaufbau-Callback
-def on_connect(client, userdata, flags, rc):
+def on_connect(client, userdata, flags, rc, properties):
     print(f"✅ MQTT verbunden (Code {rc})")
     client.subscribe(f"{MQTT_COMMAND_TOPIC}/#")
 
